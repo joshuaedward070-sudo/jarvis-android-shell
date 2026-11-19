@@ -27,7 +27,13 @@ class JarvisVoiceService : Service() {
         startId: Int
     ): Int {
 
-        val notification = Notification.Builder(this, CHANNEL_ID)
+        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder(this, CHANNEL_ID)
+        } else {
+            Notification.Builder(this)
+        }
+
+        val notification = builder
             .setContentTitle("JARVIS is active")
             .setContentText("Your assistant is ready.")
             .setSmallIcon(android.R.drawable.ic_btn_speak_now)
